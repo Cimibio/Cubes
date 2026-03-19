@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Cube newCube = Instantiate(_cubePrefab, parentCube.transform.position,
-                                       parentCube.transform.rotation, parentCube.transform);
+                                       parentCube.transform.rotation);
 
             newCube.Init(newChance, parentCube.ExplodeRadius, parentCube.ExplodeForce, newScale);
 
