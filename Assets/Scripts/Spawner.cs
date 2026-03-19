@@ -33,22 +33,19 @@ public class Spawner : MonoBehaviour
             int count = UnityEngine.Random.Range(_minSpawnCount, _maxSpawnCount + 1);
             SpawnCubes(count, clickedCube);
         }
-
-        clickedCube.Explode();
     }
 
     private void SpawnCubes(int count, Cube parentCube)
     {
         List<Cube> spawnedCubes = new();
+        Vector3 newScale = parentCube.transform.localScale / _scaleDivider;
 
         for (int i = 0; i < count; i++)
         {
-            Cube newCube = Instantiate(_cubePrefab, parentCube.transform.position, parentCube.transform.rotation);
+            Cube newCube = Instantiate(parentCube, parentCube.transform.position, parentCube.transform.rotation);            
 
-            int newChance = parentCube.SplitChance / _chanceDivider;
-            Vector3 newScale = parentCube.transform.localScale / _scaleDivider;
-
-            newCube.Init(newChance, newScale);
+            newCube.transform.localScale = newScale;
+            newCube.ReduceSplitChance(_chanceDivider);
             _colorChanger.SetRandomColor(newCube);
         }        
     }

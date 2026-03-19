@@ -147,3 +147,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _splitChance: 100
+  _explodeRadius: 10
+  _explodeForce: 200

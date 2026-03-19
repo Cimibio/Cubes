@@ -5,23 +5,17 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     [SerializeField] private int _splitChance = 100;
-    [SerializeField] private float _explodeRadius = 10f;
-    [SerializeField] private float _explodeForce = 2000f;
+    [SerializeField] private float _explodeRadius = 0f;
+    [SerializeField] private float _explodeForce = 0f;
 
     public static event Action<Cube> Clicked;
     public static event Action<Cube> Exploded;
 
     public int SplitChance => _splitChance;
 
-    //private void Start()
-    //{
-    //    GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
-    //}
-
-    public void Init(int newChance, Vector3 newScale)
+    public void ReduceSplitChance(int divider)
     {
-        _splitChance = newChance;
-        transform.localScale = newScale;
+        _splitChance = _splitChance / divider;
     }
 
     public void Explode()
@@ -48,6 +42,6 @@ public class Cube : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         Clicked?.Invoke(this);
-        //Explode();
+        Explode();
     }
 }
