@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
+    [SerializeField] private ColorChanger _colorChanger;
     [SerializeField] private int _minSpawnCount = 2;
     [SerializeField] private int _maxSpawnCount = 6;
     [SerializeField] private int _chanceDivider = 2;
@@ -48,6 +49,7 @@ public class Spawner : MonoBehaviour
             Vector3 newScale = parentCube.transform.localScale / _scaleDivider;
 
             newCube.Init(newChance, newScale);
+            _colorChanger.SetRandomColor(newCube);
         }        
     }
 }

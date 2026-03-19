@@ -13,10 +13,10 @@ public class Cube : MonoBehaviour
 
     public int SplitChance => _splitChance;
 
-    private void Start()
-    {
-        GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
-    }
+    //private void Start()
+    //{
+    //    GetComponent<Renderer>().material.color = UnityEngine.Random.ColorHSV();
+    //}
 
     public void Init(int newChance, Vector3 newScale)
     {
