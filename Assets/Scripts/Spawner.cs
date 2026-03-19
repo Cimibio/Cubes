@@ -1,52 +1,31 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
-    [SerializeField] private ColorChanger _colorChanger;
-    [SerializeField] private int _minSpawnCount = 2;
-    [SerializeField] private int _maxSpawnCount = 6;
-    [SerializeField] private int _chanceDivider = 2;
-    [SerializeField] private int _scaleDivider = 2;
 
-    private int _minRandomChance = 0;
-    private int _maxRandomChance = 100;
-
-    private void OnEnable()
+    public void SpawnCubes(int count, Cube parentCube, int scaleDivider, int chanceDivider)
     {
-        Cube.Clicked += OnCubeClicked;
-    }
-
-    private void OnDisable()
-    {
-        Cube.Clicked -= OnCubeClicked;
-    }
-
-    private void OnCubeClicked(Cube clickedCube)
-    {
-        float randomValue = UnityEngine.Random.Range(_minRandomChance, _maxRandomChance + 1);
-
-        if (randomValue <= clickedCube.SplitChance)
-        {
-            int count = UnityEngine.Random.Range(_minSpawnCount, _maxSpawnCount + 1);
-            SpawnCubes(count, clickedCube);
-        }
-    }
-
-    private void SpawnCubes(int count, Cube parentCube)
-    {
-        List<Cube> spawnedCubes = new();
-        Vector3 newScale = parentCube.transform.localScale / _scaleDivider;
+        Vector3 newScale = Vector3.one / scaleDivider;
+        int newChance = parentCube.SplitChance / chanceDivider;
 
         for (int i = 0; i < count; i++)
         {
-            Cube newCube = Instantiate(parentCube, parentCube.transform.position, parentCube.transform.rotation);            
+            Cube newCube = Instantiate(_cubePrefab, parentCube.transform.position,
+                                       parentCube.transform.rotation, parentCube.transform);
 
-            newCube.transform.localScale = newScale;
-            newCube.ReduceSplitChance(_chanceDivider);
-            _colorChanger.SetRandomColor(newCube);
-        }        
+            newCube.Init(newChance, parentCube.ExplodeRadius, parentCube.ExplodeForce, newScale);
+
+            Debug.Log($"Spawner create cube#{i + 1}/{count}");
+            SetRandomColor(newCube);
+        }
+    }
+
+    private void SetRandomColor(Cube cube)
+    {
+        if (cube.TryGetComponent<Renderer>(out Renderer renderer))
+        {
+            renderer.material.color = Random.ColorHSV();
+        }
     }
 }

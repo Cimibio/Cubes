@@ -2,23 +2,9 @@ using UnityEngine;
 
 public class CubeDestroyer : MonoBehaviour
 {
-    private void OnEnable()
+    public void DestroyCube(Cube parentCube)
     {
-        Cube.Exploded += DestroyCube;
-    }
-
-    private void OnDisable()
-    {
-        Cube.Exploded -= DestroyCube;
-    } 
-
-    private void DestroyCube(Cube parentCube)
-    {
-        foreach (Transform child in parentCube.transform)
-        {
-            child.SetParent(null);
-        }
-
+        Debug.Log("Destroy!");
         Destroy(parentCube.gameObject);
     }
 }
