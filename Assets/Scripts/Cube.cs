@@ -8,9 +8,6 @@ public class Cube : MonoBehaviour
     [SerializeField] private float _explodeRadius = 10f;
     [SerializeField] private float _explodeForce = 200f;
 
-    public static event Action<Cube> Clicked;
-    public static event Action<Cube> Exploded;
-
     public int SplitChance => _splitChance;
     public float ExplodeRadius => _explodeRadius;
     public float ExplodeForce => _explodeForce;
@@ -23,12 +20,20 @@ public class Cube : MonoBehaviour
         transform.localScale = scale;
     }
 
+    public void ApplyExplosionForce(float force, Vector3 position, float radius)
+    {
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+
+        if (rigidbody != null)
+        {
+            rigidbody.AddExplosionForce(force, position, radius);
+        }
+    }
+
     private void Explode()
     {
         foreach (Rigidbody affectedObjects in GetAffectedObjects())
             affectedObjects.AddExplosionForce(_explodeForce, transform.position, _explodeRadius);
-
-        Exploded?.Invoke(this);
     }
 
     private List<Rigidbody> GetAffectedObjects()
@@ -42,11 +47,5 @@ public class Cube : MonoBehaviour
                 cubes.Add(hit.attachedRigidbody);
 
         return cubes;
-    }
-
-    private void OnMouseUpAsButton()
-    {
-        Clicked?.Invoke(this);
-        Explode();
     }
 }

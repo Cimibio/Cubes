@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     private int _minRandomChance = 0;
     private int _maxRandomChance = 100;
 
-    public event Action<Cube> CubesSpawned;
+    public event Action<Cube, List<Cube>> CubesSpawned;
 
     private void OnEnable()
     {
@@ -29,16 +29,18 @@ public class Spawner : MonoBehaviour
 
     private void OnCubeClicked(Cube clickedCube)
     {
+        List<Cube> spawnedCubes = new List<Cube>();
+
         float randomValue = UnityEngine.Random.Range(_minRandomChance, _maxRandomChance + 1);
 
         if (randomValue <= clickedCube.SplitChance)
         {
             int count = UnityEngine.Random.Range(_minSpawnCount, _maxSpawnCount + 1);
 
-            SpawnCubes(count, clickedCube, _scaleDivider, _chanceDivider);
+            spawnedCubes = SpawnCubes(count, clickedCube, _scaleDivider, _chanceDivider);
         }
 
-        CubesSpawned?.Invoke(clickedCube);
+        CubesSpawned?.Invoke(clickedCube, spawnedCubes);
     }
 
     private List<Cube> SpawnCubes(int count, Cube parentCube, int scaleDivider, int chanceDivider)
