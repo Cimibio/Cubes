@@ -17,11 +17,6 @@ public class CubeDestroyer : MonoBehaviour
         _spawner.CubesSpawned -= OnCubesSpawned;
     }
 
-    private void DestroyCube(Cube parentCube)
-    {        
-        Destroy(parentCube.gameObject);
-    }
-
     private void OnCubesSpawned(Cube parentCube, List<Cube> spawnedCubes)
     {
         Destroy(parentCube.gameObject);
