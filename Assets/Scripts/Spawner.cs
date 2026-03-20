@@ -1,12 +1,51 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
+    [SerializeField] private CubeDestroyer _destroyer;
+    [SerializeField] private CubeSelector _selector;
+    [SerializeField] private int _minSpawnCount = 2;
+    [SerializeField] private int _maxSpawnCount = 6;
+    [SerializeField] private int _chanceDivider = 2;
+    [SerializeField] private int _scaleDivider = 2;
 
-    public void SpawnCubes(int count, Cube parentCube, int scaleDivider, int chanceDivider)
+    private int _minRandomChance = 0;
+    private int _maxRandomChance = 100;
+
+    public event Action<Cube> CubesSpawned;
+
+    private void OnEnable()
     {
-        Vector3 newScale = Vector3.one / scaleDivider;
+        _selector.CubeSelected += OnCubeClicked;
+    }
+
+    private void OnDisable()
+    {
+        _selector.CubeSelected -= OnCubeClicked;
+    }
+
+    private void OnCubeClicked(Cube clickedCube)
+    {
+        float randomValue = UnityEngine.Random.Range(_minRandomChance, _maxRandomChance + 1);
+
+        if (randomValue <= clickedCube.SplitChance)
+        {
+            int count = UnityEngine.Random.Range(_minSpawnCount, _maxSpawnCount + 1);
+
+            SpawnCubes(count, clickedCube, _scaleDivider, _chanceDivider);
+        }
+
+        CubesSpawned?.Invoke(clickedCube);
+    }
+
+    private List<Cube> SpawnCubes(int count, Cube parentCube, int scaleDivider, int chanceDivider)
+    {
+        List<Cube> cubes = new List<Cube>();
+
+        Vector3 newScale = parentCube.transform.localScale / scaleDivider;
         int newChance = parentCube.SplitChance / chanceDivider;
 
         for (int i = 0; i < count; i++)
@@ -16,16 +55,18 @@ public class Spawner : MonoBehaviour
 
             newCube.Init(newChance, parentCube.ExplodeRadius, parentCube.ExplodeForce, newScale);
 
-            Debug.Log($"Spawner create cube#{i + 1}/{count}");
             SetRandomColor(newCube);
+            cubes.Add(newCube);
         }
+
+        return cubes;
     }
 
     private void SetRandomColor(Cube cube)
     {
         if (cube.TryGetComponent<Renderer>(out Renderer renderer))
         {
-            renderer.material.color = Random.ColorHSV();
+            renderer.material.color = UnityEngine.Random.ColorHSV();
         }
     }
 }

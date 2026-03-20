@@ -38,10 +38,8 @@ public class Cube : MonoBehaviour
         List<Rigidbody> cubes = new();
 
         foreach (Collider hit in hits)
-            if (hit.attachedRigidbody != null && hit.attachedRigidbody.transform.IsChildOf(transform))
+            if (hit.attachedRigidbody != null )
                 cubes.Add(hit.attachedRigidbody);
-
-        Debug.Log($"affected count: {cubes.Count}");
 
         return cubes;
     }
