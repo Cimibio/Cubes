@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
     [SerializeField] private CubeDestroyer _destroyer;
-    [SerializeField] private CubeSelector _selector;
+    [SerializeField] private ClickProcessor _clickProcessor;
     [SerializeField] private int _minSpawnCount = 2;
     [SerializeField] private int _maxSpawnCount = 6;
     [SerializeField] private int _chanceDivider = 2;
@@ -19,12 +19,12 @@ public class Spawner : MonoBehaviour
 
     private void OnEnable()
     {
-        _selector.CubeSelected += OnCubeClicked;
+        _clickProcessor.CubeSelected += OnCubeClicked;
     }
 
     private void OnDisable()
     {
-        _selector.CubeSelected -= OnCubeClicked;
+        _clickProcessor.CubeSelected -= OnCubeClicked;
     }
 
     private void OnCubeClicked(Cube clickedCube)

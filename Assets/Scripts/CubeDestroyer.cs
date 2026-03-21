@@ -19,8 +19,6 @@ public class CubeDestroyer : MonoBehaviour
 
     private void OnCubesSpawned(Cube parentCube, List<Cube> spawnedCubes)
     {
-        Destroy(parentCube.gameObject);
-
         foreach (Cube cube in spawnedCubes)
         {
             if (cube != null)
@@ -28,5 +26,7 @@ public class CubeDestroyer : MonoBehaviour
                 cube.ApplyExplosionForce(parentCube.ExplodeForce, parentCube.transform.position, parentCube.ExplodeRadius);
             }
         }
+
+        Destroy(parentCube.gameObject);
     }
 }
