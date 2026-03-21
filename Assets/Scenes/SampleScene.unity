@@ -285,6 +285,58 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373547677}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &514360692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 514360693}
+  - component: {fileID: 514360694}
+  m_Layer: 0
+  m_Name: CubeInputHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &514360693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514360692}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.7322705, y: -1.1883984, z: 4.373343}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &514360694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514360692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f13d2d53fb04044ab4b42d367eaf9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _raycaster: {fileID: 857760204}
+  _mouseReader: {fileID: 1992927827}
+  _spawner: {fileID: 2070497235}
+  _cubeExploder: {fileID: 748008217}
+  _minSpawnCount: 2
+  _maxSpawnCount: 6
+  _chanceDivider: 2
+  _scaleDivider: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +442,7 @@ GameObject:
   - component: {fileID: 748008218}
   - component: {fileID: 748008217}
   m_Layer: 0
-  m_Name: CubeDestroyer
+  m_Name: CubeExploder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -408,7 +460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a9792afd760b54e9e9ea5f1b4974e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawner: {fileID: 2070497235}
 --- !u!4 &748008218
 Transform:
   m_ObjectHideFlags: 0
@@ -618,52 +669,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 17.619, y: 0, z: 0}
---- !u!1 &1263115472
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1263115474}
-  - component: {fileID: 1263115475}
-  m_Layer: 0
-  m_Name: ClickProcessor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1263115474
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263115472}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7322705, y: -1.1883984, z: 4.373343}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1263115475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263115472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55f13d2d53fb04044ab4b42d367eaf9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _raycaster: {fileID: 857760204}
-  _mouseReader: {fileID: 1992927827}
 --- !u!1 &1602667953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,12 +1013,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: 6505633228598029611, guid: a197d6048a74b464a93ce6f28ab9f05e, type: 3}
-  _destroyer: {fileID: 748008217}
-  _clickProcessor: {fileID: 1263115475}
-  _minSpawnCount: 2
-  _maxSpawnCount: 6
-  _chanceDivider: 2
-  _scaleDivider: 2
 --- !u!4 &2070497236
 Transform:
   m_ObjectHideFlags: 0
@@ -1257,6 +1256,6 @@ SceneRoots:
   - {fileID: 849380526}
   - {fileID: 358405760}
   - {fileID: 1839226462}
-  - {fileID: 1263115474}
   - {fileID: 857760205}
   - {fileID: 1992927828}
+  - {fileID: 514360693}

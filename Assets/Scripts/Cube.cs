@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
@@ -18,34 +16,5 @@ public class Cube : MonoBehaviour
         _explodeRadius = radius;
         _explodeForce = force;
         transform.localScale = scale;
-    }
-
-    public void ApplyExplosionForce(float force, Vector3 position, float radius)
-    {
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
-
-        if (rigidbody != null)
-        {
-            rigidbody.AddExplosionForce(force, position, radius);
-        }
-    }
-
-    private void Explode()
-    {
-        foreach (Rigidbody affectedObjects in GetAffectedObjects())
-            affectedObjects.AddExplosionForce(_explodeForce, transform.position, _explodeRadius);
-    }
-
-    private List<Rigidbody> GetAffectedObjects()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, _explodeRadius);
-
-        List<Rigidbody> cubes = new();
-
-        foreach (Collider hit in hits)
-            if (hit.attachedRigidbody != null )
-                cubes.Add(hit.attachedRigidbody);
-
-        return cubes;
     }
 }
